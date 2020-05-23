@@ -1,0 +1,4 @@
+user:damians
+password:damian10
+host:localhost
+database:cinema_db

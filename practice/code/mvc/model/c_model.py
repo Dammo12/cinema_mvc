@@ -1,7 +1,7 @@
 from mysql import connector
 
 class Model:
-    def __init__(self, config_db_file='m_config.txt'):
+    def __init__(self, config_db_file='c_config.txt'):
         self.config_db_file = config_db_file
         self.config_db = self.read_config_db()
         self.connect_to_db()
@@ -70,6 +70,54 @@ class Model:
         try:
             sql = 'DELETE FROM movies  WHERE id_movie = %s'
             vals = (id_movie,)
+            self.cursor.execute(sql, vals)
+            self.cnx.commit()
+            count = self.cursor.rowcount
+            return count
+        except connector.Error as err:
+            self.cnx.rollback()
+            return err
+
+
+
+    
+    #Halls
+
+    def create_hall(self, h_type, h_price, h_seats):
+        try:
+            sql = 'INSERT INTO halls (`h_type`, `h_price`, `h_seats`) VALUES (%s,%s,%s)'
+            vals = (h_type, h_price, h_seats)
+            self.cursor.execute(sql, vals)
+            self.cnx.commit()
+            return True
+        except connector.Error as err:
+            self.cnx.rollback()
+            return err
+        
+    def read_halls(self):
+        try:
+            sql = 'SELECT * FROM halls'
+            self.cursor.execute(sql)
+            records = self.cursor.fetchall()
+            return records
+        except connector.Error as err:
+            self.cnx.rollback()
+            return err
+
+    def update_halls(self, fields, vals):
+        try:
+            sql = 'UPDATE halls SET ' + ','.join(fields) + 'WHERE id_hall = %s'
+            self.cursor.execute(sql, vals)
+            self.cnx.commit()
+            return True
+        except connector.Error as err:
+            self.cnx.rollback()
+            return err 
+
+    def delete_hall(self, id_hall):
+        try:
+            sql = 'DELETE FROM halls  WHERE id_hall = %s'
+            vals = (id_hall,)
             self.cursor.execute(sql, vals)
             self.cnx.commit()
             count = self.cursor.rowcount
