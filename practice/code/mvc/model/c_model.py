@@ -25,6 +25,30 @@ class Model:
     """
     # -- CRUD --
     """
+
+    def register(self, u_email, u_password, u_name, admin):
+        try :
+            sql = 'INSERT INTO users (`u_email`,`u_password`,`u_name`,`admin`) VALUES (%s,%s,%s,%s)'
+            vals = (u_email, u_password, u_name, admin)
+            self.cursor.execute(sql, vals)
+            self.cnx.commit()
+            return True
+        except connector.Error as err:
+            self.cnx.rollback()
+            return err
+
+    def login(self, u_email, u_password):
+        try:
+            sql = 'SELECT * FROM users WHERE u_email = %s'
+            vals = (u_email,)
+            self.cursor.execute(sql, vals)
+            record = self.cursor.fetchone()
+            return record
+        except connector.Error as err:
+            return err
+
+
+
     
     def create_movie(self, m_name, m_duration, m_sday, m_eday):
         try:
