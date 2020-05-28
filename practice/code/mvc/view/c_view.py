@@ -73,6 +73,11 @@ class View:
         print('4.- Borrar sala')
         print('5.- Regresar')
 
+    def seats_menu(self):
+        print('1.- Ver asientos disponibles de función')
+        print('2.- Ver asientos ocupados de función')
+        print('3.- Regresar')
+
     def movies_menu(self):
         print('1.- Agregar nueva pelicula')
         print('2.- Ver lista de peliculas')
@@ -85,10 +90,11 @@ class View:
         print('1.- Agregar nuevo horario')
         print('2.- Agregar horario a pelicula')
         print('3.- Ver horarios')
-        print('4.- Ver horarios de pelicula')
-        print('5.- Editar horario')
-        print('6.- Borrar horario')
-        print('7.- Regresar')
+        print('4.- Ver funciones')
+        print('5.- Ver funciones de pelicula')
+        print('6.- Editar horario')
+        print('7.- Borrar horario')
+        print('8.- Regresar')
 
     def admins_menu(self):
         print('1.- Lista Usuarios')
@@ -208,7 +214,7 @@ class View:
     
     def seats_available(self, seats):
         print('='*100)
-        print('ASIENTOS DISPONIBLES'.center(100))
+        print('ASIENTOS'.center(100))
         print('='*100)
         for i in seats:
             print(str(i[0]) +', ', end = '')

@@ -175,10 +175,10 @@ class Model:
             self.cnx.rollback()
             return err
 
-    def seats_available(self, id_sch_data):
+    def seats_available(self, id_sch_data, s_available):
         try:
-            sql = 'SELECT seats.s_number FROM seats WHERE id_sch_data = %s AND s_available = True'
-            vals = (id_sch_data,)
+            sql = 'SELECT seats.s_number FROM seats WHERE id_sch_data = %s AND s_available = %s'
+            vals = (id_sch_data, s_available)
             self.cursor.execute(sql, vals)
             records = self.cursor.fetchall()
             return records

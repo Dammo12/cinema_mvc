@@ -173,6 +173,8 @@ class Controller:
             o = input()
             if o == '1':
                 self.halls_menu()
+            elif o == '2':
+                self.seats_menu()
             elif o == '3':
                 self.movies_menu()
             elif o == '4':
@@ -276,6 +278,40 @@ class Controller:
                 self.view.error('PROBLEMA AL BORRAR PELICULA')
         return
 
+
+
+    #Asientos
+
+    def seats_menu(self):
+        o = '0'
+        while o != 3:
+            self.view.header('MENU ASIENTOS')
+            self.view.seats_menu()
+            self.view.opcion('3')
+            o = input()
+            if o == '1':
+                self.seats_show_a(True)
+            elif o == '2':
+                self.seats_show_a(False)
+            elif o == '3':
+                return
+            else:
+                self.view.not_valid_op()
+
+    def seats_show_a(self, available):
+        sch_data = self.model.read_all_sch_data()
+        if type(sch_data) == list:
+            self.view.show_sch_data(sch_data)
+            print('Id Funcion: ', end = '')
+            id_sch_data = input()
+            seats = self.model.seats_available(id_sch_data, available)
+            if type(seats) == list:
+                self.view.seats_available(seats)
+            else:
+                self.view.error('PROBLEMA AL VER ASIENTOS')
+            return
+        else:
+            self.view.error('PROBLEMA AL VER HORARIOS DE PELICULAS')
     
     #Salas
 
@@ -376,12 +412,14 @@ class Controller:
             elif o == '3':
                 self.show_schedules()
             elif o == '4':
-                self.show_sch_data()
+                self.show_all_sch_data()
             elif o == '5':
-                self.update_schedule()
+                self.show_sch_data()
             elif o == '6':
-                self.delete_schedule()
+                self.update_schedule()
             elif o == '7':
+                self.delete_schedule()
+            elif o == '8':
                 return
             else:
                 self.view.not_valid_op()
@@ -582,7 +620,7 @@ class Controller:
             self.view.error('PROBLEMA AL VER HORARIOS DE PELICULAS')
         print('No de horario: ', end = '')
         id_sch_data = input()
-        seats = self.model.seats_available(id_sch_data)
+        seats = self.model.seats_available(id_sch_data, True)
         self.view.seats_available(seats)
         print('Asiento: ', end = '')
         s_number = input()
